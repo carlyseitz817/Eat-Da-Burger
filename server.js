@@ -2,10 +2,10 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 
-//Define port the server will be listening on.
-var PORT = process.env.PORT || 3313;
-
 var app = express();
+
+//Define port the server will be listening on.
+app.set('port', (process.env.PORT || 3313));
 
 //Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static(__dirname + '/public'));
@@ -27,7 +27,7 @@ var routes = require("./controllers/burgers_controller.js");
 
 app.use(routes);
 
-//App is listening...
-app.listen(PORT, function () {
-    console.log("App now listening at localhost:" + PORT);
+// Start node server
+app.listen(app.get('port'), function () {
+    console.log('Node server is running on port ' + app.get('port'));
 });
