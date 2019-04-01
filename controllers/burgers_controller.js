@@ -20,28 +20,21 @@ router.post("/api/burgers", function(req, res) {
   burger.insertOne([
     "burger_name", "devoured"
   ], [
-    req.body.burger_name, req.body.devoured
-  ], function(result) {
-    res.json({ id: result.insertId });
+    req.body.burger_name, 0
+  ], function() {
+    res.redirect("/");
   });
 });
 
 router.put("/api/burgers/:id", function(req, res) {
-  var condition = "id = " + req.params.id;
+    var condition = 'id = ' + req.params.id;
 
-  console.log("condition ", condition);
-
-  burger.updateOne({
-    devoured: req.body.devoured
-  }, condition, function(result) {
-    if (result.changedRows == 0) {
-      // If no rows were changed, then the ID must not exist, so 404
-      return res.status(404).end();
-    } else {
-      res.status(200).end();
-    }
+    burger.updateOne({
+      devoured: true
+    }, condition, function() {
+      res.redirect('/');
+    });
   });
-});
 
 // Export routes for server.js to use.
 module.exports = router;
