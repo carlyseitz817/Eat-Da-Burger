@@ -1,40 +1,45 @@
 <h1 class="page-title">EAT DA BURGER</h1>
 
-<div class="wrapper">
-    {{!-- Left side --}}
-    <div class="ready-to-eat col-sm-12 col-md-4 col-lg-4 col-xl-4">
-        <h2>Ready to Eat</h2>
-        <h5>(Click on a burger name to eat it)</h5>
-        {{#each burgers}}
-        {{#unless this.devoured}}
-        <div>
-            <form action="api/burgers/{{this.id}}?_method=PUT" method="POST">
-                <button type="submit" class='available'> {{this.burger_name}}</button>
+<div class="main-content">
+    <div class="wrapper">
+        {{!-- Left side --}}
+        <div class="ready-to-eat col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <h2>Ready to Eat</h2>
+            <h5>(Click on a burger name to eat it)</h5>
+            {{#each burgers}}
+            {{#unless this.devoured}}
+            <div>
+                <form action="api/burgers/{{this.id}}?_method=PUT" method="POST">
+                    <button type="submit" class='available'> {{this.burger_name}}</button>
+                </form>
+            </div>
+            {{/unless}}
+            {{/each}}
+        </div>
+
+        {{!-- Middle --}}
+        <div class="picture-and-form col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <img class="col-sm-12 col-md-4 col-lg-4 col-xl-4" src="/assets/images/burger.png" id="burger-img">
+            <form action="/api/burgers" method="POST">
+                <input type="text" class="text-input" name="burger_name" placeholder="Burger Name Here"
+                    id="burger-input">
+                <button type="submit" class="add-burger-button">ADD</button>
             </form>
         </div>
-        {{/unless}}
-        {{/each}}
-    </div>
 
-    {{!-- Middle --}}
-    <div class="picture-and-form col-sm-12 col-md-4 col-lg-4 col-xl-4">
-        <img class="col-sm-12 col-md-4 col-lg-4 col-xl-4" src="/assets/images/burger.png" id="burger-img">
-        <form action="/api/burgers" method="POST">
-            <input type="text" class="text-input" name="burger_name" placeholder="Burger Name Here" id="burger-input">
-            <button type="submit" class="add-burger-button">ADD</button>
-        </form>
-    </div>
-
-    {{!-- Right side --}}
-    <div class="all-eaten col-sm-12 col-md-4 col-lg-4 col-xl-4">
-        <h2>Already Eaten</h2>
-        {{#each burgers}}
-        {{#if this.devoured}}
-        <div>
-            {{this.burger_name}}
+        {{!-- Right side --}}
+        <div class="all-eaten col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <h2>Already Eaten</h2>
+            {{#each burgers}}
+            {{#if this.devoured}}
+            <div>
+                {{!-- {{this.burger_name}} --}}
+                <form action="api/burgers/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class='available'> {{this.burger_name}}</button>
+                </form>
+            </div>
+            {{/if}}
+            {{/each}}
         </div>
-        {{/if}}
-        {{/each}}
     </div>
-
 </div>

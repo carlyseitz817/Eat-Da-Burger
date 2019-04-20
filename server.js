@@ -1,33 +1,28 @@
-//Dependencies
-var express = require("express");
-var bodyParser = require("body-parser");
+// Pull in required dependencies
+var express = require('express');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
-//Define port the server will be listening on.
-var PORT = process.env.PORT || 3313;
+var port = process.env.PORT || 3446;
 
 var app = express();
 
-//Serve static content for the app from the "public" directory in the application directory.
+// Serve static content for the app from the 'public' directory
 app.use(express.static(__dirname + '/public'));
 
-// Parse application body
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// Set Handlebars.
-var exphbs = require("express-handlebars");
+app.use(methodOverride('_method'));
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+// Set Handlebars as the view engine
+var exphbs = require('express-handlebars');
 
-// Import routes and give the server access to them.
-var routes = require("./controllers/burgers_controller.js");
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
-app.use(routes);
+// Import routes and give the server access to them
+var routes = require('./controllers/burgers_controller.js');
 
-// Start our server so that it can begin listening to client requests.
-app.listen(PORT, function() {
-  // Log (server-side) when our server has started
-  console.log("Server listening on: http://localhost:" + PORT);
-});
+app.use('/', routes);
 
+app.listen(port);
